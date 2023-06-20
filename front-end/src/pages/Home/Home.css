@@ -1,0 +1,24 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+.movies-container {
+    margin-top: 70px;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+p {
+    color: #F4EEE0;
+    font-weight: bold;
+}
+
+:root {
+    --handle-size: 3rem;
+    --img-gap: .25rem;
+}

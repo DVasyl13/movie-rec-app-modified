@@ -1,9 +1,9 @@
 
 const ForYou = () => {
     return (
-        <div>
+        <>
 
-        </div>
+        </>
     );
 };
 
