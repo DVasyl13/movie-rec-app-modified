@@ -1,9 +1,13 @@
 import {Link, NavLink} from "react-router-dom";
 
-const SliderElement = (props: { src: string; }) => {
+type SliderElementProps = {
+    src: string
+}
+
+const SliderElement = (props: SliderElementProps) => {
     return (
         <NavLink className='slider-element' to='/main'>
-            <img src="https://via.placeholder.com/210/00FF00?text=1"></img>
+            <img src={props.src}></img>
             <p>Some</p>
         </NavLink>
     );

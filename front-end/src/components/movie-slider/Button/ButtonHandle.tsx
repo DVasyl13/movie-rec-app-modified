@@ -1,10 +1,18 @@
 import './ButtonHandle.css';
-const ButtonHandle = (props:{class:string}) => {
+
+type ButtonHandleProps = {
+    class: string;
+    direction: string;
+    onClick: () => void;
+};
+
+const ButtonHandle = (props: ButtonHandleProps) => {
     return (
-        <button className={props.class}>
-            <div className="text">&#8249;</div>
+        <button className={props.class} onClick={props.onClick}>
+            <div className="text">{props.direction}</div>
         </button>
     );
 };
+
 
 export default ButtonHandle;

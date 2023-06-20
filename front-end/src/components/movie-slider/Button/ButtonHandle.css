@@ -31,3 +31,12 @@
 .handle:focus {
     background-color: rgba(255, 255, 255, .5);
 }
+
+.text {
+    transition: transform 150ms ease-in-out;
+}
+
+.handle:hover .text,
+.handle:focus .text {
+    transform: scale(1.2);
+}
