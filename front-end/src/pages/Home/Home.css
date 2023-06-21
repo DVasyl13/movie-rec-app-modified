@@ -7,13 +7,8 @@
     width: 100%;
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-}
 
-p {
+p, h3 {
     color: #F4EEE0;
     font-weight: bold;
 }

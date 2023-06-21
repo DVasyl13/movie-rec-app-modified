@@ -1,12 +1,14 @@
 import './Home.css';
-import SliderLayout from "../../layouts/SliderLayout";
+import Slider from "../../components/movie-slider/Slider";
 
 const Home = () => {
 
     return (
         <>
             <div className="movies-container">
-                <SliderLayout/>
+                <Slider/>
+                <Slider/>
+                <Slider/>
             </div>
         </>
     );
