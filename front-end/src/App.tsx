@@ -4,6 +4,8 @@ import ForYou from "./pages/ForYou/ForYou";
 import Saved from "./pages/Saved/Saved";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
+import LogIn from "./pages/Auth/login/LogIn";
+import SignIn from "./pages/Auth/signin/SignIn";
 
 const router = createBrowserRouter([
     {
@@ -11,6 +13,8 @@ const router = createBrowserRouter([
         element: <RootLayout/>,
         children: [
             { path: '', element: <Started/>},
+            {path: '/login', element: <LogIn/>},
+            {path: '/register', element: <SignIn/>},
             { path: '/main',element: <Home/> },
             { path: '/for-you', element: <ForYou/> },
             { path: '/saved', element: <Saved/> }

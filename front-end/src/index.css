@@ -10,3 +10,7 @@ body {
   position: relative;
   max-width: 1980px;
 }
+
+.root {
+  min-height: 100vh;
+}
