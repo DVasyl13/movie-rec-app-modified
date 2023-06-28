@@ -24,7 +24,7 @@ const SignIn = () => {
                     <p hidden></p>
                 </div>
                 <div className="auth-form button-form">
-                    <Button class="btn btn-sizing btn-big" text="Submit"/>
+                    <Button class="btn btn-sizing btn-big" text="Submit" onClick={() => {}}/>
                 </div>
             </div>
         </div>

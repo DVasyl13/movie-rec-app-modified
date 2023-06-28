@@ -12,8 +12,8 @@ const LogRegWithSocial = () => {
             <div className="social">
                 <p>Login with social media</p>
                 <div className="social-btns">
-                    <Button class="btn btn-sizing" text="Twitter"/>
-                    <Button class="btn btn-sizing" text="Google"/>
+                    <Button class="btn btn-sizing" text="Twitter" onClick={() => {}}/>
+                    <Button class="btn btn-sizing" text="Google" onClick={() => {}}/>
                 </div>
             </div>
         </div>

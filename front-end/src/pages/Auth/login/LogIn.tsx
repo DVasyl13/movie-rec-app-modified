@@ -50,7 +50,7 @@ const LogIn = () => {
                     <p hidden></p>
                 </div>
                 <div className="auth-form button-form">
-                    <Button class="btn btn-sizing btn-big" text="Submit"/>
+                    <Button class="btn btn-sizing btn-big" text="Submit" onClick={() => {}}/>
                     <NavLink className="link" to="/password-recovery">Forget your password?</NavLink>
                 </div>
             </div>

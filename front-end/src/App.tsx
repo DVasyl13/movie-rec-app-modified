@@ -8,7 +8,7 @@ import LogIn from "./pages/Auth/login/LogIn";
 import SignIn from "./pages/Auth/signin/SignIn";
 import {RequireAuth} from "react-auth-kit";
 import React, {Fragment} from "react";
-import Movie from "./pages/Movie/Movie";
+import Movie from "./pages/DContent/Movie/Movie";
 
 const router = createBrowserRouter([
     {
