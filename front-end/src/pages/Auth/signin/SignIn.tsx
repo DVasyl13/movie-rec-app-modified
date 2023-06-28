@@ -1,4 +1,5 @@
 import '../Auth.css';
+import '../AuthButtons.css';
 import {NavLink} from "react-router-dom";
 import Button from "../../../components/Button";
 import LogRegWithSocial from "../LogRegWithSocial";
@@ -10,6 +11,8 @@ const SignIn = () => {
             <div className="right-auth-container">
                 <div className="auth-form title-form">
                     <p className='title-medium bottom-padding-mid'>Registration</p>
+                    <p className="text-normal">Already have an account? <NavLink className="link" to="/login">Go to the
+                        Login page</NavLink></p>
                 </div>
 
                 <div className="auth-form inputs-form">
@@ -22,7 +25,6 @@ const SignIn = () => {
                 </div>
                 <div className="auth-form button-form">
                     <Button class="btn btn-sizing btn-big" text="Submit"/>
-                    <NavLink className="link" to="/password-recovery">Forget your password?</NavLink>
                 </div>
             </div>
         </div>

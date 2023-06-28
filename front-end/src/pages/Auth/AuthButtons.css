@@ -1,0 +1,43 @@
+.social-btns {
+    --button-number: 2;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+
+.btn {
+    padding-right: 12px;
+    padding-left: 12px;
+    border: 0;
+    border-radius: 6px;
+    background-color: #F4EEE0;
+    color: #2E2137;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.btn-sizing {
+    height: 2rem;
+    width: calc(80% / var(--button-number));
+    max-width: 30%;
+    min-width: 100px;
+    transition: 160ms ease-out 100ms;
+}
+
+.btn:hover {
+    scale: 1.05;
+}
+
+.btn:active {
+    background: #c4bfbb;
+}
+
+.button-form {
+    margin-top: 2rem;
+    gap: .7rem;
+}
+
+.btn-big {
+    width: 40%;
+}

@@ -1,7 +1,7 @@
 import ButtonHandle from "./Button/ButtonHandle";
 import SliderTape from "./SliderTape";
 import {useState} from "react";
-import {ISliderElement} from "../../types/interfaces/ISliderElement";
+import {ISliderElement} from "../../types/interfaces/SliderElement";
 
 
 const Slider = () => {

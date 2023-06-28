@@ -1,7 +1,7 @@
 import SliderElement from "./SliderElement";
 import './Slider.css';
 import React from "react";
-import {ISliderElement} from "../../types/interfaces/ISliderElement";
+import {ISliderElement} from "../../types/interfaces/SliderElement";
 
 
 interface SliderTapeProps {
