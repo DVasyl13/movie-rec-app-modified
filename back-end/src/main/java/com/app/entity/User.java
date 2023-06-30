@@ -27,10 +27,24 @@ public class User implements UserDetails {
     private Boolean isEnable;
     private Boolean isExpired;
     private Boolean isLocked;
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
     public User(Long id) {
         this.id = id;
+    }
+
+    public User(String username,
+                String password,
+                String email,
+                UserRole role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.userRole = role;
+        this.isLocked = false;
+        this.isExpired = false;
+        this.isEnable = false;
     }
 
     public User(Long id, String username,
