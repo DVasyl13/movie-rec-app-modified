@@ -9,6 +9,7 @@ import SignIn from "./pages/Auth/signin/SignIn";
 import {RequireAuth} from "react-auth-kit";
 import React, {Fragment} from "react";
 import Movie from "./pages/DContent/Movie/Movie";
+import Account from "./pages/Account/Account";
 
 const router = createBrowserRouter([
     {
@@ -35,7 +36,13 @@ const router = createBrowserRouter([
                         </Fragment>
                     </RequireAuth>
                 ) },
-
+            { path: '/account', element: (
+                    <RequireAuth loginPath="/login">
+                        <Fragment>
+                            <Account />
+                        </Fragment>
+                    </RequireAuth>
+                ) },
         ]
     }
 ]);
