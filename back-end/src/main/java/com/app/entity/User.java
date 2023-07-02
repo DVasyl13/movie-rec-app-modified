@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 
 @Table(name = "user")
@@ -44,7 +45,7 @@ public class User implements UserDetails {
         this.userRole = role;
         this.isLocked = false;
         this.isExpired = false;
-        this.isEnable = false;
+        this.isEnable = true;
     }
 
     public User(Long id, String username,
@@ -65,9 +66,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority =
-                new SimpleGrantedAuthority(userRole.name());
-        return Collections.singletonList(authority);
+        return List.of(new SimpleGrantedAuthority(userRole.name()));
+    }
+    public String getName() {
+        return username;
     }
 
     @Override
@@ -77,12 +79,12 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return !isLocked;
+        return !isExpired;
     }
 
     @Override
