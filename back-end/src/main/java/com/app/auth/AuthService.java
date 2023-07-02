@@ -4,6 +4,8 @@ import com.app.auth.dto.AuthRequest;
 import com.app.auth.dto.AuthenticationResponse;
 import com.app.auth.dto.RegisterRequest;
 import com.app.entity.User;
+import com.app.exception.UserAlreadyExistException;
+import com.app.exception.WrongPasswordException;
 import com.app.repository.UserRepository;
 import com.app.security.JwtService;
 import com.app.utils.enums.UserRole;
@@ -23,25 +25,24 @@ public class AuthService {
     private final AuthenticationManager authManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        //todo: check if email is not occupied
+        if (userRepository.findByEmail(request.email()).isPresent()) {
+            throw new UserAlreadyExistException(request.email());
+        }
         var user = new User(request.username(),
                 passwordEncoder.encode(request.password()),
                 request.email(), UserRole.USER);
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        System.out.println(jwtToken);
         return new AuthenticationResponse(jwtToken);
     }
 
     public AuthenticationResponse authenticate(AuthRequest request) {
-        //todo: check if password the same
-
-        //dont work
-        authManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password()));
-
-
         var user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new UsernameNotFoundException("User with [" + request.email() + "] was not found"));
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+            throw new WrongPasswordException(request.email());
+        }
+        authManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password()));
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponse(jwtToken);
     }
