@@ -1,6 +1,7 @@
 import {NavLink} from "react-router-dom";
 import SearchBar from "./SearchBar";
 import './Header.css';
+import UserButton from "./UserButton";
 
 const Header = () => {
     return (
@@ -10,7 +11,7 @@ const Header = () => {
                 <NavLink className='nav-element' to='/for-you'>For-you</NavLink>
                 <NavLink className='nav-element' to='/saved'>Saved</NavLink>
                 <SearchBar/>
-                <NavLink id="log-btn" className='log-btn' to='/login'>Login</NavLink>
+                <UserButton/>
             </div>
         </div>
     );

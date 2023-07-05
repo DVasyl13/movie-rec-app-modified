@@ -1,15 +1,19 @@
 import '../Auth.css';
 import '../AuthButtons.css';
+import JwtDecode from "jwt-decode";
 import {NavLink, useNavigate} from "react-router-dom";
 import Button from "../../../components/Button";
 import LogRegWithSocial from "../LogRegWithSocial";
 import {useSignIn} from "react-auth-kit";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {AuthApiResponse} from "../../../types/interfaces/AuthApiResponse";
 import {useFormik} from "formik";
 import {LoginRequest} from "../../../types/interfaces/LoginRequest";
+import {UserContext} from "../../../storage/UserContext";
+import {Token} from "../../../types/interfaces/Token";
 
 const LogIn = () => {
+    const { username, setUsername } = useContext(UserContext);
     const [error, setError] = useState("");
     const signIn = useSignIn();
     const navigator = useNavigate();
@@ -27,7 +31,8 @@ const LogIn = () => {
                 body: JSON.stringify(values)
             });
             const responseData: AuthApiResponse = await response.json();
-            console.log(responseData);
+            const token: Token = JwtDecode(responseData.token);
+            setUsername(token.nma);
             signIn({
                 token: responseData.token,
                 expiresIn: 3600 * 24,

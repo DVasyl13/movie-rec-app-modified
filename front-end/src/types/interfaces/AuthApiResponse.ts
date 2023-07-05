@@ -1,3 +1,4 @@
 export interface AuthApiResponse {
-    token: string
+    token: string,
+    refreshToken: string
 }

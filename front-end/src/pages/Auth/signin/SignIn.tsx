@@ -7,14 +7,18 @@ import LogRegWithSocial from "../LogRegWithSocial";
 import {useFormik} from "formik";
 import {RegistrationRequest} from "../../../types/interfaces/RegistrationRequest";
 import {AuthApiResponse} from "../../../types/interfaces/AuthApiResponse";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {useSignIn} from "react-auth-kit";
+import {Token} from "../../../types/interfaces/Token";
+import JwtDecode from "jwt-decode";
+import {UserContext} from "../../../storage/UserContext";
 
 const SignIn = () => {
     const [error, setError] = useState("");
     const signIn = useSignIn();
     const [passConf, setPassConf] = useState("");
     const navigator = useNavigate();
+    const { username, setUsername } = useContext(UserContext);
 
     const onSubmit = async (values: RegistrationRequest) => {
         console.log("Values: ", values);
@@ -32,8 +36,8 @@ const SignIn = () => {
                 body: JSON.stringify(values)
             });
             const responseData: AuthApiResponse = await response.json();
-            console.log(responseData);
-            
+            const token: Token = JwtDecode(responseData.token);
+            setUsername(token.nma);
             signIn({
                 token: responseData.token,
                 expiresIn: 3600 * 24,

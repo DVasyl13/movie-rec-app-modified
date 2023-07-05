@@ -28,6 +28,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +49,7 @@ public class AuthenticationService {
                 passwordEncoder.encode(request.password()),
                 request.email(), UserRole.USER);
         var savedUser = userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = getJwtToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);
         return new AuthenticationResponse(jwtToken, refreshToken);
@@ -61,11 +63,17 @@ public class AuthenticationService {
             throw new WrongPasswordException(request.email());
         }
         authManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password()));
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = getJwtToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
         return new AuthenticationResponse(jwtToken, refreshToken);
+    }
+
+    private String getJwtToken(User user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("nma", user.getName());
+        return jwtService.generateToken(claims, user);
     }
 
 
