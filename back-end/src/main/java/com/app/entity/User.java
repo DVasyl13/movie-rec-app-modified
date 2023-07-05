@@ -1,5 +1,6 @@
 package com.app.entity;
 
+import com.app.security.token.Token;
 import com.app.utils.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 
 @Table(name = "user")
@@ -30,6 +32,9 @@ public class User implements UserDetails {
     private Boolean isLocked;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Token> tokens;
 
     public User(Long id) {
         this.id = id;

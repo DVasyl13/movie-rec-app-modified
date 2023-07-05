@@ -33,7 +33,7 @@ const SignIn = () => {
             });
             const responseData: AuthApiResponse = await response.json();
             console.log(responseData);
-
+            
             signIn({
                 token: responseData.token,
                 expiresIn: 3600 * 24,

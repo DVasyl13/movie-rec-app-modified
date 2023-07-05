@@ -1,4 +1,4 @@
 package com.app.auth.dto;
 
-public record AuthenticationResponse(String token) {
+public record AuthenticationResponse(String token, String refreshToken) {
 }
