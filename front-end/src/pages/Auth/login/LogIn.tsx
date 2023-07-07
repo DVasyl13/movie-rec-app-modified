@@ -33,6 +33,7 @@ const LogIn = () => {
             const responseData: AuthApiResponse = await response.json();
             const token: Token = JwtDecode(responseData.token);
             setUsername(token.nma);
+            sessionStorage.setItem("jwt", responseData.token);
             signIn({
                 token: responseData.token,
                 expiresIn: 3600 * 24,
