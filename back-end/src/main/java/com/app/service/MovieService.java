@@ -10,6 +10,7 @@ import com.app.exception.EmptyResultFromDbCall;
 import com.app.repository.MovieDetailsRepository;
 import com.app.repository.MovieRepository;
 import com.app.utils.IdMapper;
+import com.app.utils.MovieMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,7 @@ public class MovieService {
         }
 
         MovieDto movieDto = getFullMovieFromApi(imdbId);
-        //entityManager.merge(MovieMapper.mapMovieDtoToMovieDetails(movieDto));
+        entityManager.merge(MovieMapper.mapMovieDtoToMovieDetails(movieDto));
         return movieDto;
     }
 
@@ -90,15 +91,13 @@ public class MovieService {
     public Set<MovieSmallDto> getUsersFavouriteMovies() {
         Set<Movie> movies = movieRepository.getFavouriteUsersMovies();
         if (movies != null) {
-            return null;
-           // return MovieMapper.mapMovieSetToMovieSmallDto(movies);
+            return MovieMapper.mapMovieSetToMovieSmallDto(movies);
         }
         throw new EmptyResultFromDbCall("movieRepository.getFavouriteUsersMovies() returns null");
     }
 
     private MovieDto changeIdToIMDbStyle(MovieDetails movie) {
-        return null;
-        //return MovieMapper.mapMovieDetailsToMovieDto(movie);
+        return MovieMapper.mapMovieDetailsToMovieDto(movie);
     }
 
 }

@@ -8,5 +8,5 @@ public record MovieDto(String id, Long idDigit, String fullTitle, String image,
                        String plot, String awards, String countries, Set<GenreDto> genreList,
                        String companies, String imDbRating, Integer imDbRatingVotes, TrailerDto trailer,
                        String metacriticRating, BoxOffice boxOffice, Set<MovieSmallDto> similars,
-                       Set<PersonDto> directorList, Set<PersonDto> writerList, Set<ActorDto> actorList) {
+                       Set<PersonDto> directorList, Set<PersonDto> writerList, Set<PersonDto> actorList) {
 }

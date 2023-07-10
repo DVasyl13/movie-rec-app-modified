@@ -15,12 +15,17 @@ import java.util.Set;
 @NoArgsConstructor
 public class PersonRole {
     @Id
-    Long id;
+    @Column(length = 64)
+    private String id;
 
     @Column(name = "role", nullable = false)
     private String role;
 
-    @ManyToMany(mappedBy = "roles")
+    @OneToMany(mappedBy = "role")
     @JsonBackReference
     private Set<Person> people = new HashSet<>();
+
+    public PersonRole(String id) {
+        this.id = id;
+    }
 }

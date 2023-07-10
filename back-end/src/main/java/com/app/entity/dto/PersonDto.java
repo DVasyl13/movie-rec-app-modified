@@ -1,4 +1,6 @@
 package com.app.entity.dto;
 
-public record PersonDto(String id, Long idDigit, String name) {
+import java.util.Set;
+
+public record PersonDto(String id, Long idDigit, String name, String image, String role) {
 }

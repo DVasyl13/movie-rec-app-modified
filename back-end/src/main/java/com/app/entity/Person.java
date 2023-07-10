@@ -3,18 +3,16 @@ package com.app.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "person")
 @Setter
 @Getter
+@Builder
 @ToString(exclude = {"movies"})
 public class Person {
 
@@ -27,16 +25,15 @@ public class Person {
     @Column(name = "image", nullable = false)
     private String image;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "person_role",
-            joinColumns = { @JoinColumn(name = "person_id") },
-            inverseJoinColumns = { @JoinColumn(name = "role_id") }
-    )
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<PersonRole> roles = new HashSet<>();
+    private PersonRole role;
 
     @ManyToMany(mappedBy = "people")
     @JsonBackReference
     private Set<MovieDetails> movies = new HashSet<>();
+
+    public Person() {
+
+    }
 }
