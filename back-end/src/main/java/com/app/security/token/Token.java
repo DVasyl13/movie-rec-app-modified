@@ -1,6 +1,8 @@
 package com.app.security.token;
 
 import com.app.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,6 +10,7 @@ import lombok.*;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "user")
 @Builder
 @Entity
 public class Token {
@@ -24,7 +27,9 @@ public class Token {
 
     private boolean revoked;
 
+
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonManagedReference
     private User user;
 }

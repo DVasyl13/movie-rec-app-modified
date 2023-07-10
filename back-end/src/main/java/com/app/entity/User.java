@@ -2,6 +2,7 @@ package com.app.entity;
 
 import com.app.security.token.Token;
 import com.app.utils.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,6 +35,7 @@ public class User implements UserDetails {
     private UserRole userRole;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private Set<Token> tokens;
 
     public User(Long id) {
