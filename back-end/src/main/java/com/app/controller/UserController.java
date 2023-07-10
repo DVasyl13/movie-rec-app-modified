@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import com.app.entity.User;
+import com.app.service.MovieService;
 import com.app.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final MovieService movieService;
 
     @GetMapping
     public ResponseEntity<User> getUser(HttpServletRequest request) {

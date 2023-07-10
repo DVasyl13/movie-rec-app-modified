@@ -45,6 +45,7 @@ public class AuthenticationService {
         if (userRepository.findByEmail(request.email()).isPresent()) {
             throw new UserAlreadyExistException(request.email());
         }
+
         var user = new User(request.username(),
                 passwordEncoder.encode(request.password()),
                 request.email(), UserRole.USER);
@@ -59,6 +60,7 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         var user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new UsernameNotFoundException("User with [" + request.email() + "] was not found"));
+
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new WrongPasswordException(request.email());
         }
