@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import "./Account.css";
 import Button from "../../components/Button";
 import {useSignOut} from "react-auth-kit";
@@ -16,8 +16,26 @@ const Account = () => {
     const [birthday, setBirthday] = useState("");
 
     useEffect(() => {
+        //getUser();
 
     }, []);
+
+    // const getUser = async () => {
+    //     try {
+    //         const response: Response = await fetch("http://localhost:8080/api/v1/user", {
+    //             mode: 'cors',
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    //             }
+    //         });
+    //         const responseBody = await response.json();
+    //         console.log(responseBody);
+    //     } catch (err) {
+    //         console.log("Error: ", err);
+    //     }
+    // }
 
     const handleInputChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -25,11 +43,24 @@ const Account = () => {
     ) => {
         setFunction(event.target.value);
     };
-    function logout() {
-        signOut();
-        sessionStorage.removeItem("jwt");
-        sessionStorage.removeItem("name");
-        navigator("/main");
+
+    async function logout() {
+        try {
+            await fetch("http://localhost:8080/api/v1/auth/logout", {
+                mode: 'cors',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+                }
+            });
+            signOut();
+            sessionStorage.removeItem("jwt");
+            sessionStorage.removeItem("name");
+            navigator("/main");
+        } catch (err) {
+            console.log("Error: ", err);
+        }
     }
 
     const onSubmit = () => {

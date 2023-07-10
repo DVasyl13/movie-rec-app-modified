@@ -2,10 +2,33 @@ import '../DContent.css';
 import Slider from "../../../components/movie-slider/Slider";
 import MovieButtons from "./components/MovieButtons";
 import MovieHeader from "./components/MovieHeader";
-
+import {useEffect, useState} from "react";
+import {ISliderElement} from "../../../types/interfaces/SliderElement";
+import {Movie} from "../../../types/interfaces/Movie";
 
 const Movie = () => {
+    const [similarMovies, setSimilarMovies] = useState<ISliderElement[]>([]);
+    const [cast, setCast] = useState<ISliderElement[]>([]);
+    const [movie, setMovie] = useState<Movie>();
+    async function getMovieDetails() {
+        const href = location.href;
+        const movieIMDbId = href.substring(href.lastIndexOf('/') + 1);
+        try {
+            const response = await fetch('http://localhost:8080/api/vi/movie/' + movieIMDbId);
+            const responseBody: Movie = await response.json();
 
+            setMovie(responseBody);
+
+            setSimilarMovies(responseBody.similarMovies);
+            setCast(responseBody.cast);
+        } catch (e) {
+            console.log("Error: " + e);
+        }
+    }
+
+    useEffect(() => {
+        getMovieDetails();
+    }, []);
 
     return (
         <>
@@ -13,17 +36,17 @@ const Movie = () => {
                 <div className="container-content">
                     <div className="left-container">
                         <div className="left-container-content">
-                            <img src="https://m.media-amazon.com/images/I/71NPmBOdq7L.jpg" id="movie-poster"/>
+                            <img src={movie?.poster} id="movie-poster"/>
                             <MovieButtons/>
                         </div>
                     </div>
                     <div className="right-container">
                         <div className="right-container-top">
                             <div className="right-container-top-content">
-                                <MovieHeader title={"Bladerunner 2049. 2077"}
-                                             imdbRating={8.8}
-                                             imdbRatingVoting={200000}
-                                             metacriticRating={74}
+                                <MovieHeader title={movie ? movie.title : 'Title'}
+                                             imdbRating={movie? movie.imdbRating : 0.0}
+                                             imdbRatingVoting={movie? movie.imdbRatingVoting : 0}
+                                             metacriticRating={movie? movie.metacriticRating : 0}
                                 />
                             </div>
                         </div>
@@ -59,8 +82,8 @@ const Movie = () => {
                     </div>
                     <div className="empty-div"></div>
                 </div>
-                <Slider/>
-                <Slider/>
+                <Slider title="Similar" sliderElements={similarMovies}/>
+                <Slider title="Cast" sliderElements={cast}/>
             </div>
         </>
     );

@@ -9,7 +9,6 @@ import UserContextProvider from "./storage/UserContext";
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-    <React.StrictMode>
         <AuthProvider authType={"cookie"}
                       authName={"_auth"}
                       cookieDomain={window.location.hostname}
@@ -19,7 +18,6 @@ root.render(
                 <App/>
             </UserContextProvider>
         </AuthProvider>
-    </React.StrictMode>
 );
 
 reportWebVitals();

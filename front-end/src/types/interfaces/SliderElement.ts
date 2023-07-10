@@ -1,5 +1,5 @@
 export interface ISliderElement {
-    rel: string,
+    id: string,
     src: string,
     text: string
 }

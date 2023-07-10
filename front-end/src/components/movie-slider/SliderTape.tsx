@@ -15,7 +15,10 @@ const SliderTape = (props: SliderTapeProps) => {
         <div className="slider" style={{transform: `translateX(calc(${props.sliderIndex} * -100%))`}}>
             {props.movies.map((movie, index) => (
                     <SliderElement key={index}
-                                   src={movie.src}></SliderElement>
+                                   src={movie.src}
+                                   id={movie.id}
+                                   name={movie.text}
+                    ></SliderElement>
                 )
             )}
         </div>
