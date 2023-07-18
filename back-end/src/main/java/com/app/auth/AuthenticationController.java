@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -21,8 +18,9 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
-        return ResponseEntity.ok(service.register(request));
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request,
+                                                           final HttpServletRequest httpRequest){
+        return ResponseEntity.ok(service.register(request, httpRequest));
     }
 
     @PostMapping("/authenticate")
@@ -34,5 +32,11 @@ public class AuthenticationController {
     public void refreshToken(HttpServletRequest request,
                              HttpServletResponse response) throws IOException {
         service.refreshToken(request, response);
+    }
+
+    @GetMapping("/register/verifyEmail")
+    public ResponseEntity<String> verifyEmail(@RequestParam("token") String token){
+        service.verifyEmail(token);
+        return ResponseEntity.ok("Email was verified");
     }
 }

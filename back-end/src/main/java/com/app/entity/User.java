@@ -3,16 +3,15 @@ package com.app.entity;
 import com.app.security.token.Token;
 import com.app.utils.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Table(name = "user")
@@ -26,6 +25,7 @@ public class User implements UserDetails {
     private Long id;
     private String username;
     private String password;
+    @NaturalId(mutable = true)
     private String email;
     private String country;
     private Boolean isEnable;
@@ -37,6 +37,18 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     @JsonBackReference
     private Set<Token> tokens;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<Movie> watchedMovies = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<Movie> likedMovies = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<Movie> ignoredMovies = new HashSet<>();
 
     public User(Long id) {
         this.id = id;

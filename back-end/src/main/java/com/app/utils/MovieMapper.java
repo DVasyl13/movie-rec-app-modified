@@ -55,12 +55,10 @@ public class MovieMapper {
     private static Set<Person> mergePeopleIntoOneSet(Set<PersonDto>... people) {
         return Stream.of(people)
                 .flatMap(Set::stream)
-                .map(personDto -> Person.builder()
-                            .id(personDto.idDigit())
-                            .name(personDto.name())
-                            .image(personDto.image())
-                            .role(new PersonRole(personDto.name()))
-                            .build())
+                .map(personDto -> new Person(personDto.idDigit(),
+                        personDto.name(),
+                        personDto.image(),
+                        new PersonRole(personDto.name())))
                 .collect(Collectors.toSet());
     }
 

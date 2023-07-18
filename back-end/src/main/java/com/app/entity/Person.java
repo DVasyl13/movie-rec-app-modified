@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "person")
 @Setter
 @Getter
-@Builder
+@NoArgsConstructor
 @ToString(exclude = {"movies"})
 public class Person {
 
@@ -31,9 +31,12 @@ public class Person {
 
     @ManyToMany(mappedBy = "people")
     @JsonBackReference
-    private Set<MovieDetails> movies = new HashSet<>();
+    private List<MovieDetails> movies = new ArrayList<>();
 
-    public Person() {
-
+    public Person(Long id, String name, String image, PersonRole role) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.role = role;
     }
 }
