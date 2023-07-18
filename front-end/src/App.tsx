@@ -10,6 +10,7 @@ import {RequireAuth} from "react-auth-kit";
 import React, {Fragment} from "react";
 import Movie from "./pages/DContent/Movie/Movie";
 import Account from "./pages/Account/Account";
+import PasswordRecovery from "./pages/Auth/password-recovery/PasswordRecovery";
 
 const router = createBrowserRouter([
     {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
             { path: '', element: <Started/>},
             { path: '/login', element: <LogIn/>},
             { path: '/register', element: <SignIn/>},
+            { path: '/password-recovery', element: <PasswordRecovery/>},
             { path: '/main',element: <Home/> },
             { path: '/movie/:id',element: <Movie/> },
             { path: '/person/:id',element: <Movie/> },

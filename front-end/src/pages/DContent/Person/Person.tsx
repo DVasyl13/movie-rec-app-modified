@@ -2,7 +2,7 @@ import "../DContent.css";
 import Slider from "../../../components/movie-slider/Slider";
 import {useEffect, useState} from "react";
 import {ISliderElement} from "../../../types/interfaces/SliderElement";
-import {Movie} from "../../../types/interfaces/Movie";
+import {IMovie} from "../../../types/interfaces/Movie";
 import {Person} from "../../../types/interfaces/Person";
 
 const Person = () => {

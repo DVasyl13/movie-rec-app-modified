@@ -4,18 +4,18 @@ import MovieButtons from "./components/MovieButtons";
 import MovieHeader from "./components/MovieHeader";
 import {useEffect, useState} from "react";
 import {ISliderElement} from "../../../types/interfaces/SliderElement";
-import {Movie} from "../../../types/interfaces/Movie";
+import {IMovie} from "../../../types/interfaces/Movie";
 
 const Movie = () => {
     const [similarMovies, setSimilarMovies] = useState<ISliderElement[]>([]);
     const [cast, setCast] = useState<ISliderElement[]>([]);
-    const [movie, setMovie] = useState<Movie>();
+    const [movie, setMovie] = useState<IMovie>();
     async function getMovieDetails() {
-        const href = location.href;
+        const href = document.location.href;
         const movieIMDbId = href.substring(href.lastIndexOf('/') + 1);
         try {
             const response = await fetch('http://localhost:8080/api/vi/movie/' + movieIMDbId);
-            const responseBody: Movie = await response.json();
+            const responseBody: IMovie = await response.json();
 
             setMovie(responseBody);
 

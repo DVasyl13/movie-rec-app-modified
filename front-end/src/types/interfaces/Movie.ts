@@ -1,6 +1,6 @@
 import {ISliderElement} from "./SliderElement";
 
-export interface Movie {
+export interface IMovie {
     id: string
     title: string
     poster: string
