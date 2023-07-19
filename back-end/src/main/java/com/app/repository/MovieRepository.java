@@ -12,7 +12,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query( value =
             "select m.id, m.title, m.image " +
                     "from public.movie m " +
-                    "inner join (select ulm.movie_id, count(*) from public.user_liked_movies ulm group by ulm.movie_id " +
-                    "            order by count(ulm.movie_id) DESC limit 18) t ON t.movie_id=m.id", nativeQuery = true)
+                    "inner join (select ulm.users_liked_id, count(*) from public.user_liked_movies ulm group by ulm.users_liked_id " +
+                    "            order by count(ulm.users_liked_id) DESC limit 18) t ON t.users_liked_id=m.id", nativeQuery = true)
     Set<Movie> getFavouriteUsersMovies();
 }
