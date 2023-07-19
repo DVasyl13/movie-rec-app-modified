@@ -28,6 +28,13 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
+    @PostMapping("/password-recovery")
+    public ResponseEntity<String> passwordRecovery(@RequestBody String email){
+        return ResponseEntity.ok(service.passwordRecovery(email));
+    }
+
+
+
     @PostMapping("/refresh-token")
     public void refreshToken(HttpServletRequest request,
                              HttpServletResponse response) throws IOException {

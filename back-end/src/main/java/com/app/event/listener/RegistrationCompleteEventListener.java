@@ -20,13 +20,12 @@ import java.io.UnsupportedEncodingException;
 @RequiredArgsConstructor
 public class RegistrationCompleteEventListener implements ApplicationListener<RegistrationCompleteEvent> {
     private final UserRepository userRepository;
-    private final JavaMailSender mailSender;
     private final EmailSender emailSender;
     private User user;
     @Override
     public void onApplicationEvent(RegistrationCompleteEvent event) {
         user = event.getUser();
-        String verificationToken =  event.getJwtToken();
+        String verificationToken = event.getJwtToken();
         String url = event.getApplicationUrl()+"/register/verifyEmail?token="+verificationToken;
         try {
             emailSender.sendVerificationEmail(user, url);

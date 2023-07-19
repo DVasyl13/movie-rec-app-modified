@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import LogRegWithSocial from "../LogRegWithSocial";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import IntermediateMessage from "./IntermediateMessage";
 import PasswordRecoveryForm from "./PasswordRecoveryForm";
 import NewPasswordForm from "./NewPasswordForm";
@@ -9,19 +9,40 @@ const PasswordRecovery: React.FC = () => {
     const [step, setStep] = useState(1);
     const [email, setEmail] = useState("");
     const [verified, setVerified] = useState(false);
+    const navigator = useNavigate();
 
-    const handleEmailSubmit = (email: string) => {
-        // Add your email verification logic here
-        // Once the email is successfully verified, set the 'verified' state to true
+    const handleEmailSubmit = async (email: string) => {
+        setStep(2);
+        const value = {
+            "email": email
+        }
+        const response : Response = await fetch("http://localhost:8080/api/v1/auth/password-recovery",{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(value)
+        });
+        const responseBody = await response.json();
         setVerified(true);
         setEmail(email);
-        setStep(2);
+        setStep(3);
     };
 
-    const handlePasswordSubmit = (password: string) => {
-        // Add your password update logic here
-        // Once the password is successfully updated, set the 'step' state to 3
-        setStep(3);
+    const handlePasswordSubmit = async (password: string) => {
+        const value = {
+            "password": password
+        }
+        const response : Response = await fetch("http://localhost:8080/api/v1/auth/password-recovery",{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(value)
+        });
+        const responseBody = await response.json();
+        //send email about successful password changing
+        navigator("/login");
     };
 
     return (

@@ -37,17 +37,17 @@ const Movie = () => {
                     <div className="left-container">
                         <div className="left-container-content">
                             <img src={movie?.poster} id="movie-poster"/>
-                            <MovieButtons/>
+                            {movie && <MovieButtons movie={movie}/>}
                         </div>
                     </div>
                     <div className="right-container">
                         <div className="right-container-top">
                             <div className="right-container-top-content">
-                                <MovieHeader title={movie ? movie.title : 'Title'}
-                                             imdbRating={movie? movie.imdbRating : 0.0}
-                                             imdbRatingVoting={movie? movie.imdbRatingVoting : 0}
-                                             metacriticRating={movie? movie.metacriticRating : 0}
-                                />
+                                {movie && <MovieHeader title={movie ? movie.title : 'Title'}
+                                              imdbRating={movie ? movie.imdbRating : 0.0}
+                                              imdbRatingVoting={movie ? movie.imdbRatingVoting : 0}
+                                              metacriticRating={movie ? movie.metacriticRating : 0}
+                                    />}
                             </div>
                         </div>
                         <div className="content-description">
@@ -82,8 +82,8 @@ const Movie = () => {
                     </div>
                     <div className="empty-div"></div>
                 </div>
-                <Slider title="Similar" sliderElements={similarMovies}/>
-                <Slider title="Cast" sliderElements={cast}/>
+                {movie && <Slider title="Similar" sliderElements={similarMovies}/>}
+                {movie && <Slider title="Cast" sliderElements={cast}/>}
             </div>
         </>
     );

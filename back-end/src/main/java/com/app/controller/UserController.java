@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,10 +16,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final MovieService movieService;
 
     @GetMapping
     public ResponseEntity<User> getUser(HttpServletRequest request) {
         return ResponseEntity.ok(userService.getUserFromJwt(request));
+    }
+
+    @GetMapping("/liked/{movieId}")
+    public ResponseEntity<String> doToggleToLiked(HttpServletRequest request,
+                                                  @PathVariable String movieId) {
+        userService.toggleUserLikedMovie(request, movieId);
+        return ResponseEntity.ok(movieId);
+    }
+
+    @GetMapping("/ignored/{movieId}")
+    public ResponseEntity<String> doToggleToIgnored(HttpServletRequest request,
+                                                  @PathVariable String movieId) {
+        userService.toggleUserIgnoredMovie(request, movieId);
+        return ResponseEntity.ok(movieId);
+    }
+
+    @GetMapping("/watched/{movieId}")
+    public ResponseEntity<String> doToggleToWatched(HttpServletRequest request,
+                                                  @PathVariable String movieId) {
+        userService.toggleUserWatchedMovie(request, movieId);
+        return ResponseEntity.ok(movieId);
     }
 }

@@ -157,4 +157,9 @@ public class AuthenticationService {
         user.setIsEnable(true);
         userRepository.save(user);
     }
+
+    public String passwordRecovery(String email) {
+        //send an email
+        return "";
+    }
 }
