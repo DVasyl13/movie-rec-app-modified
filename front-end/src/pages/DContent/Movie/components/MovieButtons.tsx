@@ -1,24 +1,35 @@
 import React, {useEffect, useState} from 'react';
 import Button from "../../../../components/Button";
 import {IMovie} from "../../../../types/interfaces/Movie";
+import {UserRelationToMovie} from "../../../../types/interfaces/UserRelationToMovie";
 
 interface MovieButtonsProps {
-    movie: IMovie
+    movie: IMovie,
+    user: UserRelationToMovie | undefined
 }
 
 const MovieButtons = (props: MovieButtonsProps) => {
     const [likedButton, setLikedButton] = useState("btn");
     const [watchedSpan, setWatchedSpan] = useState("add");
     const [ignoredSpan, setIgnoredSpan] = useState("close");
-    const { movie } = props;
-    let movieIMDbId : string;
+    const {movie} = props;
+    let movieIMDbId: string;
 
     useEffect(() => {
         const href = window.location.href;
         movieIMDbId = href.substring(href.lastIndexOf('/') + 1);
-
-        //TODO: fetch user details about movie (liked/ignore/watched) to set a buttons
-    });
+        if (props.user != undefined) {
+            if (props.user.isLiked) {
+                toggleLikeButton();
+            }
+            if (props.user.isWatched) {
+                toggleWatchedButton();
+            }
+            if (props.user.isIgnored) {
+                toggleIgnoreButton();
+            }
+        }
+    }, []);
 
     const checkIfUserAuthorized = () => {
         return !!sessionStorage.getItem('jwt');
@@ -29,7 +40,7 @@ const MovieButtons = (props: MovieButtonsProps) => {
             return;
         }
         func();
-        const response: Response = await fetch("http://localhost:8080/api/v1/user/"+buttonName+"/"+movieIMDbId, {
+        const response: Response = await fetch("http://localhost:8080/api/v1/user/" + buttonName + "/" + movieIMDbId, {
             mode: 'cors',
             method: 'GET',
             headers: {
@@ -48,6 +59,7 @@ const MovieButtons = (props: MovieButtonsProps) => {
             setLikedButton("btn btn-liked");
         }
     }
+
     function toggleWatchedButton() {
         if (watchedSpan === 'add') {
             setWatchedSpan('done');
@@ -55,6 +67,7 @@ const MovieButtons = (props: MovieButtonsProps) => {
             setWatchedSpan('add');
         }
     }
+
     function toggleIgnoreButton() {
         ignoredSpan === 'close' ?
             setIgnoredSpan('done')
@@ -65,7 +78,8 @@ const MovieButtons = (props: MovieButtonsProps) => {
         <>
             <Button class="btn"
                     text="Trailer"
-                    onClick={() => {}}
+                    onClick={() => {
+                    }}
                     spanText="play_circle"/>
             <Button class="btn"
                     text="Watched"

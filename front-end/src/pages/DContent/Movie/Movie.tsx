@@ -5,11 +5,14 @@ import MovieHeader from "./components/MovieHeader";
 import {useEffect, useState} from "react";
 import {ISliderElement} from "../../../types/interfaces/SliderElement";
 import {IMovie} from "../../../types/interfaces/Movie";
+import {UserRelationToMovie} from "../../../types/interfaces/UserRelationToMovie";
 
 const Movie = () => {
     const [similarMovies, setSimilarMovies] = useState<ISliderElement[]>([]);
     const [cast, setCast] = useState<ISliderElement[]>([]);
     const [movie, setMovie] = useState<IMovie>();
+    const [userRelation, setUserRelation] = useState<UserRelationToMovie>();
+
     async function getMovieDetails() {
         const href = document.location.href;
         const movieIMDbId = href.substring(href.lastIndexOf('/') + 1);
@@ -26,8 +29,30 @@ const Movie = () => {
         }
     }
 
+    async function getUserRelationToMovie() {
+        if (!!sessionStorage.getItem('jwt')) {
+            const href = window.location.href;
+            const movieIMDbId = href.substring(href.lastIndexOf('/') + 1);
+            try {
+                const response = await fetch("http://localhost:8080/api/v1/user/movie/" + movieIMDbId, {
+                    mode: 'cors',
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+                    }
+                })
+                const responseBody: UserRelationToMovie = await response.json();
+                setUserRelation(responseBody);
+            } catch (e) {
+                console.log("Error: " + e);
+            }
+        }
+    }
+
     useEffect(() => {
         getMovieDetails();
+        getUserRelationToMovie();
     }, []);
 
     return (
@@ -37,7 +62,7 @@ const Movie = () => {
                     <div className="left-container">
                         <div className="left-container-content">
                             <img src={movie?.poster} id="movie-poster"/>
-                            {movie && <MovieButtons movie={movie}/>}
+                            {movie && <MovieButtons movie={movie} user={userRelation}/>}
                         </div>
                     </div>
                     <div className="right-container">
@@ -51,33 +76,10 @@ const Movie = () => {
                             </div>
                         </div>
                         <div className="content-description">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad eius et iure magni
-                                mollitia non, pariatur rem reprehenderit similique tempore voluptates! Culpa deleniti
-                                enim et explicabo molestiae nihil velit!</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad eius et iure magni
-                                mollitia non, pariatur rem reprehenderit similique tempore voluptates! Culpa deleniti
-                                enim et explicabo molestiae nihil velit!</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad eius et iure magni
-                                mollitia non, pariatur rem reprehenderit similique tempore voluptates! Culpa deleniti
-                                enim et explicabo molestiae nihil velit!</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad eius et iure magni
-                                mollitia non, pariatur rem reprehenderit similique tempore voluptates! Culpa deleniti
-                                enim et explicabo molestiae nihil velit!</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad eius et iure magni
-                                mollitia non, pariatur rem reprehenderit similique tempore voluptates! Culpa deleniti
-                                enim et explicabo molestiae nihil velit!</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad eius et iure magni
-                                mollitia non, pariatur rem reprehenderit similique tempore voluptates! Culpa deleniti
-                                enim et explicabo molestiae nihil velit!</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad eius et iure magni
-                                mollitia non, pariatur rem reprehenderit similique tempore voluptates! Culpa deleniti
-                                enim et explicabo molestiae nihil velit!</p>
-                            <p className="movie-plot">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad
-                                eius et iure magni mollitia non, pariatur rem reprehenderit similique tempore
-                                voluptates! Culpa deleniti enim et explicabo molestiae nihil velit! Lorem ipsum dolor
-                                sit amet, consectetur adipisicing elit. Ab ad eius et iure magni mollitia non, pariatur
-                                rem reprehenderit similique tempore voluptates! Culpa deleniti enim et explicabo
-                                molestiae nihil velit!</p>
+                            {movie && <p>Duration: {movie.duration}</p>}
+                            {movie && <p>Genres: {movie.genre}</p>}
+                            {movie && <p>Studious: {movie.studio}</p>}
+                            {movie && <p className="movie-plot">{movie.plot}</p>}
                         </div>
                     </div>
                     <div className="empty-div"></div>

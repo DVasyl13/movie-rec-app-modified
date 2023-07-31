@@ -5,6 +5,10 @@ export interface IMovie {
     title: string
     poster: string
     trailer: string
+    duration: number
+    genre: string
+    studio: string
+    plot: string
     imdbRating: number
     imdbRatingVoting: number
     metacriticRating: number

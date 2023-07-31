@@ -2,6 +2,7 @@ package com.app.service;
 
 import com.app.entity.Movie;
 import com.app.entity.User;
+import com.app.entity.dto.MovieByUser;
 import com.app.exception.UserNotFoundException;
 import com.app.exception.WrongTokenException;
 import com.app.repository.MovieRepository;
@@ -26,6 +27,18 @@ public class UserService {
     private final UserRepository userRepository;
     private final MovieRepository movieRepository;
     private final JwtService jwtService;
+
+    @Transactional
+    public MovieByUser getMovieByUser(HttpServletRequest request, String movieId) {
+        var user = getUserFromRequest(request);
+        var movie = movieRepository.findById(IdMapper.getLongFromString(movieId))
+                .orElseThrow();
+        return new MovieByUser(
+                user.getLikedMovies().contains(movie),
+                user.getWatchedMovies().contains(movie),
+                user.getIgnoredMovies().contains(movie)
+        );
+    }
 
     @Transactional
     public User getUserFromJwt(HttpServletRequest request) {

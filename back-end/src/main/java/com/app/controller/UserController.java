@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import com.app.entity.User;
+import com.app.entity.dto.MovieByUser;
 import com.app.service.MovieService;
 import com.app.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +21,12 @@ public class UserController {
     @GetMapping
     public ResponseEntity<User> getUser(HttpServletRequest request) {
         return ResponseEntity.ok(userService.getUserFromJwt(request));
+    }
+
+    @GetMapping("/movie/{id}")
+    public ResponseEntity<MovieByUser> getUserRelationOnMovie(HttpServletRequest request,
+                                                              @PathVariable String id) {
+        return ResponseEntity.ok(userService.getMovieByUser(request, id));
     }
 
     @GetMapping("/liked/{movieId}")
